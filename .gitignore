@@ -3,3 +3,6 @@
 venv
 __pycache__
 flask_key.json
+voting-app/.eslintcache
+
+flask_api/key.json
