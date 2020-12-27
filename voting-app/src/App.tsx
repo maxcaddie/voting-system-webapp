@@ -17,12 +17,10 @@ function App() {
     <div className="App">
       <header className="App-header">
         <p>
-          The current time is
-          {currentTime}
-          .
+          The current time is {currentTime}.
         </p>
       </header>
-      <form action="http://localhost:5000/uploader" method="POST" encType="multipart/form-data">
+      <form action="/uploader" method="POST" encType="multipart/form-data">
         <input type="file" name="file" />
         <input type="submit" />
       </form>

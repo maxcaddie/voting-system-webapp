@@ -1,6 +1,6 @@
 import time
 import os
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from werkzeug.utils import secure_filename
 
 import firebase_admin
@@ -31,14 +31,11 @@ def get():
     print(users_database_dict)
     return users_database_dict
 
-@app.route('/upload')
-def upload_file():
-    return render_template('upload.html')
-
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload_files():
     if request.method == 'POST':
         f = request.files['file']
         os.makedirs(os.path.join(app.instance_path, 'upload_files'), exist_ok=True)
         f.save(os.path.join(app.instance_path, 'upload_files', secure_filename(f.filename)))
-        return 'file uploaded successfully'
+
+        return redirect(request.referrer)
