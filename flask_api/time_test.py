@@ -1,7 +1,11 @@
 import time
+import os
 from flask import Flask, render_template, request
+from werkzeug.utils import secure_filename
+
 import firebase_admin
 from firebase_admin import credentials, firestore
+
 
 cred = credentials.Certificate("key.json")
 firebase_admin.initialize_app(cred)
@@ -9,6 +13,8 @@ db = firestore.client()
 
 
 app = Flask(__name__)
+
+app.config['UPLOAD_FOLDER'] = "/uploads"
 
 
 @app.route('/time')
@@ -33,5 +39,6 @@ def upload_file():
 def upload_files():
     if request.method == 'POST':
         f = request.files['file']
-        f.save(f.filename)
+        os.makedirs(os.path.join(app.instance_path, 'upload_files'), exist_ok=True)
+        f.save(os.path.join(app.instance_path, 'upload_files', secure_filename(f.filename)))
         return 'file uploaded successfully'
