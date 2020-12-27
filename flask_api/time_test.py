@@ -34,8 +34,26 @@ def get():
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload_files():
     if request.method == 'POST':
-        f = request.files['file']
-        os.makedirs(os.path.join(app.instance_path, 'upload_files'), exist_ok=True)
-        f.save(os.path.join(app.instance_path, 'upload_files', secure_filename(f.filename)))
+        make_sure_folder_to_save_exists()
+
+        uploaded_file = get_uploaded_file(request)
+        uploaded_filename = get_secure_filename_from_file(uploaded_file)
+        uploaded_file_extentsion = get_file_extension_from_name(uploaded_filename)
+
+        # Saves file in current directory/ instance / upload_files / secured_filename
+        uploaded_file.save(os.path.join(app.instance_path, 'upload_files', uploaded_filename))
 
         return redirect(request.referrer)
+
+
+def make_sure_folder_to_save_exists():
+    os.makedirs(os.path.join(app.instance_path, 'upload_files'), exist_ok=True)
+
+def get_uploaded_file(request):
+    return request.files['file']
+
+def get_secure_filename_from_file(file):
+    return secure_filename(file.filename)
+
+def get_file_extension_from_name(filename):
+    return os.path.splitext(filename)[-1]
