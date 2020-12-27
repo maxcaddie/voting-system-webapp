@@ -1,5 +1,5 @@
 import time
-from flask import Flask
+from flask import Flask, render_template, request
 import firebase_admin
 from firebase_admin import credentials, firestore
 
@@ -24,3 +24,14 @@ def get():
         users_database_dict[doc.id] = doc.to_dict()
     print(users_database_dict)
     return users_database_dict
+
+@app.route('/upload')
+def upload_file():
+    return render_template('upload.html')
+
+@app.route('/uploader', methods = ['GET', 'POST'])
+def upload_files():
+    if request.method == 'POST':
+        f = request.files['file']
+        f.save(f.filename)
+        return 'file uploaded successfully'

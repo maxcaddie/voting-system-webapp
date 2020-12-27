@@ -19,7 +19,10 @@ function App() {
       <header className="App-header">
         <p>The current time is {currentTime}.</p>
       </header>
-      <input type="file" name="file" />
+      <form action="http://localhost:5000/uploader" method = "POST" encType="multipart/form-data">
+        <input type="file" name="file" />
+        <input type="submit" />
+      </form>
     </div>
   );
 }
