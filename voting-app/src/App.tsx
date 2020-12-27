@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import LoginForm from './authentication/login';
 
 function App() {
   const [currentTime, setCurrentTime] = useState(0);
@@ -20,6 +21,7 @@ function App() {
           The current time is {currentTime}.
         </p>
       </header>
+      <LoginForm />
       <form action="/uploader" method="POST" encType="multipart/form-data">
         <input type="file" name="file" />
         <input type="submit" />
