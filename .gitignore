@@ -8,3 +8,5 @@ voting-app/.eslintcache
 flask_api/key.json
 
 flask_api/instance/upload_files/
+
+voting-app/src/firebaseapikey.tsx
