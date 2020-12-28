@@ -25,5 +25,6 @@ module.exports = {
     'import/no-unresolved': 'off',
     'import/extensions': 'off',
     'react/jsx-one-expression-per-line': 'off',
+    'no-alert': 'off',
   },
 };

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import LoginForm from './authentication/login';
+import LoginForm from './components/authentication/login';
+import CsvUploader from './components/authentication/uploads/csvUploader';
 
 function App() {
   const [currentTime, setCurrentTime] = useState(0);
@@ -22,10 +23,7 @@ function App() {
         </p>
       </header>
       <LoginForm />
-      <form action="/uploader" method="POST" encType="multipart/form-data">
-        <input type="file" name="file" />
-        <input type="submit" />
-      </form>
+      <CsvUploader />
     </div>
   );
 }

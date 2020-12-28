@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
 import React, { useState } from 'react';
 import firebase from 'firebase';
-import { fireAuth } from '../firebase';
+import { fireAuth } from '../../firebase';
 
 function LoginForm() {
   const [email, setEmail] = useState('');
@@ -16,6 +16,7 @@ function LoginForm() {
 
     fireAuth.signInWithEmailAndPassword(email, password).then((e: firebase.auth.UserCredential) => {
       if (e.user) {
+        alert('Log in successful');
         // return history.push(`/${e.user.uid}/Home`);
       }
     }).catch((error) => {
