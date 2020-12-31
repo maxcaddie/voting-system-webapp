@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import firebase from 'firebase';
 import { fireAuth } from '../../firebase';
 import LogoutButton from './logoutButton';
+import { localStorageUserID } from '../../constants/authenticationConstants';
 
 function LoginForm() {
   const [email, setEmail] = useState('');
@@ -17,8 +18,8 @@ function LoginForm() {
 
     fireAuth.signInWithEmailAndPassword(email, password).then((e: firebase.auth.UserCredential) => {
       if (e.user) {
-        localStorage.setItem('userID', e.user.uid);
-        alert(`Log in successful ${localStorage.getItem('userID')}`);
+        localStorage.setItem(localStorageUserID, e.user.uid);
+        alert(`Log in successful ${localStorage.getItem(localStorageUserID)}`);
         // return history.push(`/${e.user.uid}/Home`);
       }
     }).catch((error) => {
