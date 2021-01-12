@@ -42,7 +42,7 @@ def upload_files():
 
         # Saves file in current directory/ instance / upload_files / secured_filename
         uploaded_file.save(os.path.join(app.instance_path, 'upload_files', uploaded_filename))
-
+        print("the username is", request.args.get('user'))
         return redirect(request.referrer)
 
 
