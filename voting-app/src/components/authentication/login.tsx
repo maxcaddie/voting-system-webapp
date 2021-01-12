@@ -20,6 +20,7 @@ function LoginForm() {
       if (e.user) {
         localStorage.setItem(localStorageUserID, e.user.uid);
         alert(`Log in successful ${localStorage.getItem(localStorageUserID)}`);
+        window.location.reload();
         // return history.push(`/${e.user.uid}/Home`);
       }
     }).catch((error) => {
