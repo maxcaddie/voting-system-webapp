@@ -10,3 +10,5 @@ flask_api/key.json
 flask_api/instance/upload_files/
 
 voting-app/src/firebaseapikey.tsx
+
+flask_api/secrets.py

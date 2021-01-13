@@ -4,12 +4,21 @@ from flask import Flask, render_template, request, redirect
 from werkzeug.utils import secure_filename
 
 import firebase_admin
-from firebase_admin import credentials, firestore
+from firebase_admin import credentials, firestore, storage
 
+from secrets import STORAGE_BUCKET_ID
 
 cred = credentials.Certificate("key.json")
-firebase_admin.initialize_app(cred)
+firebase_admin.initialize_app(cred,{
+    'storageBucket': STORAGE_BUCKET_ID
+})
 db = firestore.client()
+bucket = storage.bucket()
+
+blob = bucket.blob("hello2.txt")
+outfile = "./instance/upload_files/tex.txt"
+with open(outfile, 'rb') as my_file:
+    blob.upload_from_file(my_file)
 
 
 app = Flask(__name__)
