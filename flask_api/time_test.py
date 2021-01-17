@@ -15,12 +15,6 @@ firebase_admin.initialize_app(cred,{
 db = firestore.client()
 bucket = storage.bucket()
 
-blob = bucket.blob("hello2.txt")
-outfile = "./instance/upload_files/tex.txt"
-with open(outfile, 'rb') as my_file:
-    blob.upload_from_file(my_file)
-
-
 app = Flask(__name__)
 
 app.config['UPLOAD_FOLDER'] = "/uploads"
@@ -43,6 +37,8 @@ def get():
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload_files():
     if request.method == 'POST':
+        userId = request.args.get('user')
+
         make_sure_folder_to_save_exists()
 
         uploaded_file = get_uploaded_file(request)
@@ -51,7 +47,12 @@ def upload_files():
 
         # Saves file in current directory/ instance / upload_files / secured_filename
         uploaded_file.save(os.path.join(app.instance_path, 'upload_files', uploaded_filename))
-        print("the username is", request.args.get('user'))
+
+        blob = bucket.blob(userId+"/yo_it_up2.txt")
+        outfile = "./instance/upload_files/tex.txt"
+        with open(outfile, 'rb') as my_file:
+            blob.upload_from_file(my_file)
+
         return redirect(request.referrer)
 
 
