@@ -46,11 +46,13 @@ def upload_files():
         uploaded_file_extentsion = get_file_extension_from_name(uploaded_filename)
 
         # Saves file in current directory/ instance / upload_files / secured_filename
-        uploaded_file.save(os.path.join(app.instance_path, 'upload_files', uploaded_filename))
+        full_file_path = os.path.join(app.instance_path, 'upload_files', uploaded_filename)
 
-        blob = bucket.blob(userId+"/yo_it_up2.txt")
-        outfile = "./instance/upload_files/tex.txt"
-        with open(outfile, 'rb') as my_file:
+        uploaded_file.save(full_file_path)
+
+        blob = bucket.blob(userId+"/"+uploaded_filename)
+
+        with open(full_file_path, 'rb') as my_file:
             blob.upload_from_file(my_file)
 
         return redirect(request.referrer)
