@@ -44,6 +44,9 @@ def upload_files():
         uploaded_file = get_uploaded_file(request)
         uploaded_filename = get_secure_filename_from_file(uploaded_file)
         uploaded_file_extentsion = get_file_extension_from_name(uploaded_filename)
+        
+        if not isCsv(uploaded_file_extentsion):
+            return redirect(request.referrer)
 
         # Saves file in current directory/ instance / upload_files / secured_filename
         full_file_path = os.path.join(app.instance_path, 'upload_files', uploaded_filename)
@@ -69,3 +72,6 @@ def get_secure_filename_from_file(file):
 
 def get_file_extension_from_name(filename):
     return os.path.splitext(filename)[-1]
+
+def isCsv(file_extension):
+    return file_extension == ".csv"
