@@ -17,7 +17,9 @@ bucket = storage.bucket()
 
 app = Flask(__name__)
 
-app.config['UPLOAD_FOLDER'] = "/uploads"
+UPLOAD_FOLDER = "upload_files"
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 @app.route('/time')
@@ -42,6 +44,7 @@ def upload_files():
         make_sure_folder_to_save_exists()
 
         uploaded_file = get_uploaded_file(request)
+        #NOTE: Filename inculdes extension
         uploaded_filename = get_secure_filename_from_file(uploaded_file)
         uploaded_file_extentsion = get_file_extension_from_name(uploaded_filename)
         
@@ -49,7 +52,7 @@ def upload_files():
             return redirect(request.referrer)
 
         # Saves file in current directory/ instance / upload_files / secured_filename
-        full_file_path = os.path.join(app.instance_path, 'upload_files', uploaded_filename)
+        full_file_path = os.path.join(app.instance_path, UPLOAD_FOLDER, uploaded_filename)
 
         uploaded_file.save(full_file_path)
 
@@ -58,11 +61,13 @@ def upload_files():
         with open(full_file_path, 'rb') as my_file:
             blob.upload_from_file(my_file)
 
+        delete_file(uploaded_filename)
+
         return redirect(request.referrer)
 
 
 def make_sure_folder_to_save_exists():
-    os.makedirs(os.path.join(app.instance_path, 'upload_files'), exist_ok=True)
+    os.makedirs(os.path.join(app.instance_path, UPLOAD_FOLDER), exist_ok=True)
 
 def get_uploaded_file(request):
     return request.files['file']
@@ -75,3 +80,12 @@ def get_file_extension_from_name(filename):
 
 def isCsv(file_extension):
     return file_extension == ".csv"
+
+def delete_file(file_name):
+    file_path_from_instance = "./instance/"+UPLOAD_FOLDER+"/"+file_name
+    if os.path.exists(file_path_from_instance):
+        os.remove(file_path_from_instance)
+        print(file_path_from_instance,"Successfully deleted")
+        return
+    else:
+        print("File",file_path_from_instance,"Failed to be deleted")
