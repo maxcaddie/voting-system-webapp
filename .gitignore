@@ -14,3 +14,5 @@ voting-app/src/firebaseapikey.tsx
 flask_api/secrets.py
 
 flask_api/vote-API.pem
+
+OAuth.txt
