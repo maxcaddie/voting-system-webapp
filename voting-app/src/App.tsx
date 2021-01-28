@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import LoginForm from './components/authentication/login';
 import CsvUploader from './components/uploads/csvUploader';
+import { API_IP_ADDRESS } from './constants/apiConstants';
 
 function App() {
   const [currentTime, setCurrentTime] = useState(0);
 
   function updateTime() {
-    fetch('/time').then((res) => res.json()).then((data) => {
+    fetch(`${API_IP_ADDRESS}/time`).then((res) => res.json()).then((data) => {
       setCurrentTime(data.time);
     });
   }
   useEffect(() => {
     updateTime();
-    fetch('/get');
+    fetch(`${API_IP_ADDRESS}/get`);
   }, []);
 
   return (
