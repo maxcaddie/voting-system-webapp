@@ -1,6 +1,7 @@
 import time
 import os
 from flask import Flask, render_template, request, redirect
+from flask_cors import CORS
 from werkzeug.utils import secure_filename
 
 import firebase_admin
@@ -16,6 +17,7 @@ db = firestore.client()
 bucket = storage.bucket()
 
 app = Flask(__name__)
+CORS(app)
 
 UPLOAD_FOLDER = "upload_files"
 
