@@ -12,6 +12,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+      with:
+        token: ${{ secrets.ACTIONS_TOKEN }}
     - name: Navigate to Fontend
       run:
         cd voting-app/
