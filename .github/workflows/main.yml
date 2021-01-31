@@ -12,12 +12,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - name: Navigate to Fontend
+      run:
+        cd voting-app/
     - name: Build
       run: |
         npm install
         npm run build
     - name: Firebase Deploy
       run: |
-        cd voting-app/
         sudo npm install -g firebase-tools
         firebase deploy --token ${{ secrets.FIREBASE_TOKEN }}
